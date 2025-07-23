@@ -45,7 +45,7 @@
                                 @php
                                     $hasRealAvatar =
                                         $admin->avatar_url &&
-                                        $admin->avatar_url !== '/storage/avatars/default-avatar.png' &&
+                                        $admin->avatar_url !== '/avatar/default-avatar.png' &&
                                         strpos($admin->avatar_url, '/storage/avatars/') === 0;
                                 @endphp
                                 @if ($hasRealAvatar)

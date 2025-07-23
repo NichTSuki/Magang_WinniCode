@@ -32,7 +32,7 @@
                     $hasRealAvatar =
                         $currentUser &&
                         $currentUser->getAttributes()['avatar_url'] &&
-                        $currentUser->getAttributes()['avatar_url'] !== '/storage/avatars/default-avatar.png' &&
+                        $currentUser->getAttributes()['avatar_url'] !== '/avatar/default-avatar.png' &&
                         strpos($currentUser->getAttributes()['avatar_url'], '/storage/avatars/') === 0;
                 @endphp
                 @if ($hasRealAvatar)

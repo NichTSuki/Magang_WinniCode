@@ -18,7 +18,7 @@ class UserController extends Controller
 {
     private const MAX_AVATAR_SIZE = 2048; // KB
     private const ALLOWED_AVATAR_TYPES = ['jpeg', 'png', 'jpg', 'gif'];
-    private const DEFAULT_AVATAR = '/storage/avatars/default-avatar.png';
+    private const DEFAULT_AVATAR = '/avatar/default-avatar.png';
     private const AVATAR_STORAGE_PATH = 'avatars';
 
     /**

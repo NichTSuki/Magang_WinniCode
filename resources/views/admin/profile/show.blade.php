@@ -18,7 +18,7 @@
                                         class="rounded-circle mb-2 border object-fit-cover" width="120"
                                         height="120">
                                 @else
-                                    <img src="{{ asset('/storage/avatars/default-avatar.png') }}" alt="avatar"
+                                    <img src="{{ asset('/avatar/default-avatar.png') }}" alt="avatar"
                                         class="rounded-circle mb-2 border object-fit-cover" width="120"
                                         height="120">
                                 @endif

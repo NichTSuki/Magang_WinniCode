@@ -77,20 +77,8 @@ php artisan migrate
 ```
 ```bash
 # (Opsional) Jalankan seeder untuk data dummy
-php artisan db:seed
+php artisan db:seed --class=AdminSeeder
 ```
-
-### 7. Storage Link
-```bash
-# Jika menggunakan file upload
-php artisan storage:link
-```
-
-**Catatan:** Pastikan anda memiliki avatar default yang tersedia di direktori `public/storage/avatars` dengan nama `default-avatar.png`. Jika file tersebut belum ada, tambahkan file avatar default ke lokasi berikut:
-```
-public/storage/avatars/default-avatar.png
-```
-File ini akan digunakan sebagai fallback jika pengguna tidak memiliki avatar yang diunggah dan perhatikan namanya.
 
 ## Menjalankan Aplikasi
 ### 1. Development Server

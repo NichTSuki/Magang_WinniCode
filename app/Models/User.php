@@ -58,7 +58,7 @@ class User extends Authenticatable
         }
 
         // Use default avatar SVG as fallback
-        return '/storage/avatars/default-avatar.png';
+        return '/avatar/default-avatar.png';
     }
 
     /**

@@ -17,7 +17,7 @@
             <div class="col-md-4 col-lg-3 mb-4 mb-md-0">
                 <div class="card bg-body text-body shadow border">
                     <div class="card-body text-center">
-                        <img src="{{ $user->avatar_url ?? asset('/storage/avatars/default-avatar.png') }}"
+                        <img src="{{ $user->avatar_url ?? asset('/avatar/default-avatar.png') }}"
                             class="rounded-circle mb-3 border object-fit-cover" width="100" height="100" alt="Avatar">
                         <h5 class="fw-bold mb-1">{{ $user->name }}</h5>
                         <small class="text-muted">{{ $user->email }}</small>

@@ -25,10 +25,10 @@
                             @php
                                 $avatar = Auth::user()->avatar_url
                                     ? Auth::user()->avatar_url
-                                    : asset('/storage/avatars/default-avatar.png');
+                                    : asset('/avatar/default-avatar.png');
                             @endphp
-                            <img src="{{ $avatar }}" alt="avatar" class="rounded-circle me-1 border"
-                                width="36" height="36">
+                            <img src="{{ $avatar }}" alt="avatar" class="rounded-circle me-1 border" width="36"
+                                height="36">
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end text-small shadow">
                             <li class="px-3 py-2 border-bottom">
@@ -37,17 +37,22 @@
                             </li>
                             @if (Auth::user()->role === 'admin')
                                 <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Dashboard Admin</a></li>
-                                <li><a class="dropdown-item" href="{{ route('admin.profile.edit', Auth::user()->id) }}">Edit Profil</a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.profile.edit', Auth::user()->id) }}">Edit
+                                        Profil</a></li>
                             @else
                                 <li><a class="dropdown-item" href="{{ route('user.profile.show') }}">Profil Saya</a></li>
                             @endif
-                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
                             <li>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     Logout
                                 </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
                             </li>
                         </ul>
                     </div>
