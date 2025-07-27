@@ -99,8 +99,8 @@
                                     @csrf
                                     <input type="hidden" name="post_id" value="{{ $news['id'] }}">
                                     <div class="mb-3">
-                                        <textarea name="content" class="form-control @error('content') is-invalid @enderror"
-                                                rows="3" placeholder="Tulis komentar Anda..." required>{{ old('content') }}</textarea>
+                                        <textarea name="content" class="form-control @error('content') is-invalid @enderror" rows="3"
+                                            placeholder="Tulis komentar Anda..." required>{{ old('content') }}</textarea>
                                         @error('content')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -116,50 +116,50 @@
                                 </p>
                             @endauth
                         </div>
-                    <!-- Daftar Komentar yang Sudah Ada -->
-                    <div class="d-flex flex-column gap-4">
-                        {{-- Tampilkan komentar dari database --}}
-                        @forelse ($comments ?? [] as $comment)
-                            <div class="d-flex gap-3">
-                                @if($comment->user && $comment->user->avatar_url)
-                                    <img src="{{ $comment->user->avatar_url }}"
-                                         class="rounded-circle" width="50" height="50"
-                                         alt="{{ $comment->user->name ?? 'Anonymous' }}"
-                                         style="object-fit: cover;">
-                                @else
-                                    <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center text-white fw-bold"
-                                         style="width: 50px; height: 50px;">
-                                        {{ strtoupper(substr($comment->user->name ?? 'A', 0, 1)) }}
+                        <!-- Daftar Komentar yang Sudah Ada -->
+                        <div class="d-flex flex-column gap-4">
+                            {{-- Tampilkan komentar dari database --}}
+                            @forelse ($comments ?? [] as $comment)
+                                <div class="d-flex gap-3">
+                                    @if ($comment->user && $comment->user->avatar_url)
+                                        <img src="{{ $comment->user->avatar_url }}" class="rounded-circle" width="50"
+                                            height="50" alt="{{ $comment->user->name ?? 'Anonymous' }}"
+                                            style="object-fit: cover;">
+                                    @else
+                                        <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center text-white fw-bold"
+                                            style="width: 50px; height: 50px;">
+                                            {{ strtoupper(substr($comment->user->name ?? 'A', 0, 1)) }}
+                                        </div>
+                                    @endif
+                                    <div class="flex-grow-1 bg-body-tertiary p-3 rounded-3">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <h6 class="fw-bold mb-1">{{ $comment->user->name ?? 'Anonymous' }}</h6>
+                                            <small
+                                                class="text-body-secondary">{{ $comment->created_at->diffForHumans() }}</small>
+                                        </div>
+                                        <p class="mb-2">{{ $comment->content }}</p>
+                                        @auth
+                                            @if (auth()->user()->id === $comment->user_id || (auth()->user()->role ?? null) === 'admin')
+                                                <form action="{{ route('comments.destroy', $comment->id) }}" method="POST"
+                                                    class="mt-2"
+                                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus komentar ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                        <i class="bi bi-trash"></i> Hapus
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        @endauth
                                     </div>
-                                @endif
-                                <div class="flex-grow-1 bg-body-tertiary p-3 rounded-3">
-                                    <div class="d-flex justify-content-between align-items-start">
-                                        <h6 class="fw-bold mb-1">{{ $comment->user->name ?? 'Anonymous' }}</h6>
-                                        <small class="text-body-secondary">{{ $comment->created_at->diffForHumans() }}</small>
-                                    </div>
-                                    <p class="mb-2">{{ $comment->content }}</p>
-                                    @auth
-                                        @if (auth()->user()->id === $comment->user_id || (auth()->user()->role ?? null) === 'admin')
-                                            <form action="{{ route('comments.destroy', $comment->id) }}" method="POST"
-                                                class="mt-2"
-                                                onsubmit="return confirm('Apakah Anda yakin ingin menghapus komentar ini?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-outline-danger btn-sm">
-                                                    <i class="bi bi-trash"></i> Hapus
-                                                </button>
-                                            </form>
-                                        @endif
-                                    @endauth
                                 </div>
-                            </div>
-                        @empty
-                            <div class="text-center text-body-secondary py-4 bg-body-tertiary rounded-3">
-                                <i class="bi bi-chat-dots fs-1 mb-3 d-block"></i>
-                                <p class="mb-0">Belum ada komentar untuk berita ini. Jadilah yang pertama!</p>
-                            </div>
-                        @endforelse
-                    </div>
+                            @empty
+                                <div class="text-center text-body-secondary py-4 bg-body-tertiary rounded-3">
+                                    <i class="bi bi-chat-dots fs-1 mb-3 d-block"></i>
+                                    <p class="mb-0">Belum ada komentar untuk berita ini. Jadilah yang pertama!</p>
+                                </div>
+                            @endforelse
+                        </div>
                 </section>
             </div>
 
@@ -190,7 +190,12 @@
                             @endforelse
                         </ul>
                     </div>
-
+                    <!-- Scroll to Top Button -->
+                    <button onclick="scrollToTop()" id="scrollTopBtn"
+                        class="btn btn-primary shadow-lg rounded-circle position-fixed bottom-0 end-0 m-4"
+                        style="display: none; width: 50px; height: 50px; z-index: 1050; opacity: 0.8;">
+                        <i class="fas fa-chevron-up"></i>
+                    </button>
                 </div>
             </div>
         </div>

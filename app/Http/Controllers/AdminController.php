@@ -309,15 +309,23 @@ class AdminController extends Controller
      */
     private function validateProfileData(Request $request): array
     {
-        return $request->validate([
+        $rules = [
             'name' => ['required', 'string', 'max:255'],
             'avatar' => ['nullable', 'image', 'mimes:' . implode(',', self::ALLOWED_AVATAR_TYPES), 'max:' . self::MAX_AVATAR_SIZE],
             'password' => ['nullable', 'confirmed', 'min:8', Rules\Password::defaults()],
             'password_confirmation' => ['nullable'],
             'remove_avatar' => ['nullable', 'in:0,1'],
-        ], [
+        ];
+
+        // Add current_password validation only if user wants to change password
+        if ($request->filled('password')) {
+            $rules['current_password'] = ['required', 'string'];
+        }
+
+        return $request->validate($rules, [
             'password.confirmed' => 'Konfirmasi password tidak cocok.',
             'password.min' => 'Password minimal 8 karakter.',
+            'current_password.required' => 'Password saat ini harus diisi untuk mengubah password.',
         ]);
     }
 
@@ -399,6 +407,13 @@ class AdminController extends Controller
     private function handlePasswordUpdate(Request $request, User $user, array $validatedData): void
     {
         if (!empty($validatedData['password'])) {
+            // Verify current password if provided
+            if ($request->filled('current_password')) {
+                if (!Hash::check($request->current_password, $user->password)) {
+                    throw new \Exception('Password saat ini tidak benar.');
+                }
+            }
+
             $user->password = Hash::make($validatedData['password']);
         }
     }

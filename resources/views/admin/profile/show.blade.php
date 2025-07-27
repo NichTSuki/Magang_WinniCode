@@ -13,10 +13,10 @@
                     <div class="card-body">
                         <div class="row mb-3 align-items-center">
                             <div class="col-md-4 text-center">
-                                @if ($admin->avatar_url)
-                                    <img src="{{ $admin->avatar_url }}" alt="avatar"
+                                @if ($admin->avatar_url && $admin->avatar_url !== '/avatar/default-avatar.png')
+                                    <img src="{{ asset($admin->avatar_url) }}" alt="avatar"
                                         class="rounded-circle mb-2 border object-fit-cover" width="120"
-                                        height="120">
+                                        height="120" onerror="this.src='{{ asset('/avatar/default-avatar.png') }}';">
                                 @else
                                     <img src="{{ asset('/avatar/default-avatar.png') }}" alt="avatar"
                                         class="rounded-circle mb-2 border object-fit-cover" width="120"

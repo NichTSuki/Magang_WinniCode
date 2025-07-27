@@ -70,34 +70,3 @@
         </form>
     </div>
 </div>
-
-<script>
-    document.getElementById('avatar-input').addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('preview-img').src = e.target.result;
-                document.getElementById('avatar-preview').style.display = 'block';
-            };
-            reader.readAsDataURL(file);
-            // Reset remove avatar flag when new file is selected
-            document.getElementById('remove-avatar').value = '0';
-        } else {
-            document.getElementById('avatar-preview').style.display = 'none';
-        }
-    });
-
-    function removeAvatar() {
-        if (confirm('Apakah Anda yakin ingin menghapus avatar?')) {
-            document.getElementById('remove-avatar').value = '1';
-            document.getElementById('avatar-input').value = '';
-            document.getElementById('avatar-preview').style.display = 'none';
-
-            // Hide current avatar and show message
-            const currentAvatarContainer = document.getElementById('current-avatar').parentElement;
-            currentAvatarContainer.innerHTML =
-                '<small class="text-muted">Avatar akan dihapus setelah menyimpan perubahan</small>';
-        }
-    }
-</script>

@@ -42,13 +42,8 @@
 
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <div class="input-group">
-                        <input type="password" class="form-control" id="password" name="password"
-                            placeholder="********" required>
-                        <span class="input-group-text" style="cursor:pointer" onclick="togglePassword('password', this)">
-                            <i class="fa fa-eye"></i>
-                        </span>
-                    </div>
+                    <input type="password" class="form-control" id="password" name="password"
+                        placeholder="********" required>
                 </div>
 
                 {{-- 🔗 Tombol Lupa Password --}}
@@ -70,21 +65,6 @@
         </div>
     </div>
 
-    <script>
-        function togglePassword(inputId, el) {
-            const input = document.getElementById(inputId);
-            const icon = el.querySelector('i');
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                input.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
-        }
-    </script>
 </body>
 
 </html>
