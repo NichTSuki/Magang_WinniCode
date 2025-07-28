@@ -1,10 +1,19 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="id">
 
-@section('title', 'Reset Password')
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password - Winnews</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
+</head>
 
-@section('content')
+<body style="background-color: #363535;">
 <div class="login-page d-flex align-items-center justify-content-center" style="min-height: 100vh; background-color: #363535;">
-
     <div class="card shadow p-4"
         style="max-width: 400px; width: 100%; border-radius: 16px; background-color: #ffffff">
         <h2 class="mb-4 text-center">Reset Password</h2>
@@ -37,8 +46,39 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-dark w-100">Reset Password</button>
+            <button type="submit" class="btn btn-primary w-100">Reset Password</button>
         </form>
     </div>
 </div>
-@endsection
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const passwordInput = document.getElementById('password');
+        const confirmInput = document.getElementById('password-confirm');
+        const messageDiv = document.getElementById('password-match-message');
+        const submitButton = document.querySelector('button[type="submit"]');
+
+        function validatePasswords() {
+            if (passwordInput.value && confirmInput.value) {
+                if (passwordInput.value !== confirmInput.value) {
+                    messageDiv.style.display = 'block';
+                    messageDiv.textContent = 'Passwords do not match.';
+                    confirmInput.classList.add('is-invalid');
+                    submitButton.disabled = true;
+                } else {
+                    messageDiv.style.display = 'none';
+                    confirmInput.classList.remove('is-invalid');
+                    submitButton.disabled = false;
+                }
+            } else {
+                messageDiv.style.display = 'none';
+                confirmInput.classList.remove('is-invalid');
+                submitButton.disabled = false;
+            }
+        }
+
+        passwordInput.addEventListener('input', validatePasswords);
+        confirmInput.addEventListener('input', validatePasswords);
+    });
+</script>
+</body>

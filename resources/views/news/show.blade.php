@@ -32,17 +32,26 @@
                     <!-- Info Penulis, Tanggal & Tombol Share -->
                     <div
                         class="d-flex flex-wrap align-items-center justify-content-between border-top border-bottom py-3 mb-4">
+                        @php
+                            $penulis = $news['penulis'] ?? 'Anonim';
+                            $initial = strtoupper(substr($penulis, 0, 1));
+                        @endphp
+
                         <div class="d-flex align-items-center mb-2 mb-md-0">
-                            <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1780&auto=format&fit=crop"
-                                class="rounded-circle me-2" alt="Author"
-                                style="width:40px; height:40px; object-fit:cover;">
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2"
+                                style="width: 40px; height: 40px; font-weight: bold; font-size: 1rem;">
+                                {{ $initial }}
+                            </div>
                             <div>
-                                <span class="fw-semibold">Tim Winnews</span>
-                                <div class="text-body-secondary small">Dipublikasikan pada
+                                <span class="fw-semibold">{{ $penulis }}</span>
+                                <div class="text-body-secondary small">
+                                    Dipublikasikan pada
                                     {{ \Carbon\Carbon::parse($news['created_at'] ?? now())->isoFormat('D MMMM YYYY, HH:mm') }}
-                                    WIB</div>
+                                    WIB
+                                </div>
                             </div>
                         </div>
+
                         <div class="d-flex align-items-center gap-2">
                             <span class="small me-2">Bagikan:</span>
                             <a href="#" class="btn btn-outline-secondary btn-sm" title="Bagikan ke Facebook"><i

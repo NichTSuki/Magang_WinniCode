@@ -75,3 +75,5 @@ Route::get('/dashboard', function () {
     }
     return redirect()->route('login');
 })->name('dashboard')->middleware('auth');
+
+

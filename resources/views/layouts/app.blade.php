@@ -19,6 +19,16 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/comment.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    <script>
+        (function() {
+            const themeKey = 'CONFIG.THEME.STORAGE_KEY'; // Ganti dengan CONFIG.THEME.STORAGE_KEY
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const storedTheme = localStorage.getItem(themeKey);
+            const theme = storedTheme || (prefersDark ? 'dark' :
+            'light'); // Ganti 'dark' dan 'light' sesuai dengan CONFIG.THEME.THEMES
+            document.documentElement.setAttribute('data-bs-theme', theme);
+        })();
+    </script>
 </head>
 
 <body class="d-flex flex-column min-vh-100">

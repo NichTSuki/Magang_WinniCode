@@ -2,11 +2,6 @@
 <html lang="id">
 
 <head>
-    <meta chars                <div class="mb-3">
-                    <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
-                    <input type="password" class="form-control" id="password_confirmation"
-                        name="password_confirmation" placeholder="********" required>
-                </div>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Winnews</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -60,8 +55,8 @@
 
                 <div class="mb-3">
                     <label for="password_confirmation" class="form-label">Confirm Password</label>
-                    <input type="password" class="form-control" id="password_confirmation"
-                        name="password_confirmation" placeholder="********" required>
+                    <input type="password" class="form-control" id="password_confirmation" name="password_confirmation"
+                        placeholder="********" required>
                 </div>
                 <div class="d-flex gap-2">
                     <a href="{{ url('/') }}" class="btn btn-outline-secondary w-100">Cancel</a>
