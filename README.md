@@ -24,7 +24,8 @@ Portal berita modern menggunakan Laravel 11 dan Vite build system.
     ```bash
     # Menginstal semua dependensi PHP
     composer install
-
+    ```
+    ```bash
     # Menginstal semua dependensi frontend
     npm install
     ```
@@ -32,7 +33,8 @@ Portal berita modern menggunakan Laravel 11 dan Vite build system.
     ```bash
     # Memperbarui semua dependensi PHP
     composer update
-
+    ```
+    ```bash
     # Memperbarui semua dependensi frontend
     npm update
     ```
