@@ -20,7 +20,7 @@
                     <a href="{{ route('register') }}" class="btn btn-primary">Daftar</a>
                 @else
                     <div class="dropdown">
-                        <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
+                        <a class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             @php
                                 $avatar = Auth::user()->avatar_url

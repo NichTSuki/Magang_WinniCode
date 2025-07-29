@@ -1,95 +1,116 @@
-# Laravel Project
-Proyek Laravel ini dibuat untuk membuat portal berita dengan menggunakan API External Winnicode.
+# Portal Berita Laravel
+Portal berita modern menggunakan Laravel 11 dan Vite build system.
+
+## Teknologi yang Digunakan
+- **Backend**: Laravel 11, MySQL, Sanctum
+- **Frontend**: Vite, Bootstrap 5, FontAwesome
 
 ## Persyaratan Sistem
-Pastikan sistem Anda memiliki:
 - PHP >= 8.1
 - Composer
 - Node.js & NPM
 - MySQL/PostgreSQL/SQLite
-- Web server (Apache/Nginx) atau gunakan built-in server Laravel
 
-## Instalasi
-### 1. Clone Repository
+## Cara Instalasi
+1. **Clone Repository**:
+   ```bash
+   git clone <repository-url>
+   ```
+   ```bash
+   cd PortalBerita
+   ```
 
-### 2. Instalasi Dependencies
-Install/update PHP dependencies:
-```bash
-composer install          # Gunakan ini pertama kali
-```
-```bash
-composer update           # Jalankan ini jika ingin update ke versi terbaru sesuai composer.json
-```
+2. **Instalasi Dependencies**:
+    ```bash
+    # Menginstal semua dependensi PHP
+    composer install
+    ```
+    ```bash
+    # Menginstal semua dependensi frontend
+    npm install
+    ```
+    **Update Dependencies(Jika sudah instalasi dependencies sebelumnya)**:
+    ```bash
+    # Memperbarui semua dependensi PHP
+    composer update
+    ```
+    ```bash
+    # Memperbarui semua dependensi frontend
+    npm update
+    ```
+3. **Konfigurasi Environment**:
+   ```bash
+   cp .env.example .env
+   ```
+   ```bash
+   php artisan key:generate
+   ```
+   Edit file `.env` untuk konfigurasi database dan email.
 
-Install/update JavaScript dependencies (Node.js):
-```bash
-npm install               # Menginstal semua dependencies sesuai package-lock.json
-```
-```bash
-npm update                # (Opsional) Update package yang sudah terinstall ke versi terbaru yang diizinkan
-```
+   **Contoh konfigurasi database di `.env`:**
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=nama_database
+   DB_USERNAME=username_database
+   DB_PASSWORD=password_database
+   ```
 
-### 3. Konfigurasi Environment
-```bash
-# Copy file environment
-cp .env.example .env
-```
-```bash
-# Generate application key
-php artisan key:generate
-```
+   **Contoh konfigurasi email di `.env`:**
+   ```env
+   MAIL_MAILER=smtp
+   MAIL_HOST=smtp.gmail.com
+   MAIL_PORT=587
+   MAIL_USERNAME=your-email@gmail.com
+   MAIL_PASSWORD=your-app-password
+   MAIL_ENCRYPTION=tls
+   MAIL_FROM_ADDRESS="your-email@gmail.com"
+   MAIL_FROM_NAME="Portal Berita"
+   ```
+   > **Catatan:** Untuk Gmail, aktifkan 2-Factor Authentication dan buat App Password khusus untuk digunakan sebagai `MAIL_PASSWORD`.
 
-### 4. Konfigurasi Database
-Edit file `.env` dan sesuaikan konfigurasi database:
-```env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=nama_database
-DB_USERNAME=username_database
-DB_PASSWORD=password_database
-```
+4. **Migrasi Database**:
+   Jalankan perintah berikut untuk membuat tabel di database:
+   ```bash
+   php artisan migrate
+   ```
+   Jika ingin menambahkan data awal (contoh: admin user), jalankan seeder:
+   ```bash
+   php artisan db:seed --class=AdminSeeder
+   ```
+   > **Catatan:** Pastikan database sudah dibuat dan konfigurasi di `.env` sudah benar sebelum menjalankan migrasi.
 
-### 5. Konfigurasi Email (Untuk Reset Password)
-Tambahkan konfigurasi email di file `.env` untuk mengaktifkan fitur reset password:
+5. **Build Assets**:
+   ```bash
+   npm run build
+   ```
 
-```env
-# Konfigurasi Email
-MAIL_MAILER=smtp
-MAIL_HOST=smtp.gmail.com
-MAIL_PORT=587
-MAIL_USERNAME=your-email@gmail.com
-MAIL_PASSWORD=your-app-password
-MAIL_ENCRYPTION=tls
-MAIL_FROM_ADDRESS="your-email@gmail.com"
-MAIL_FROM_NAME="${APP_NAME}"
-```
+6. **Jalankan Aplikasi**:
+   ```bash
+   php artisan serve
+   ```
+   Akses di `http://localhost:8000`
 
-**Untuk Gmail:**
-- Aktifkan 2-Factor Authentication di akun Gmail Anda
-- Generate App Password khusus untuk aplikasi Laravel
-- Gunakan App Password tersebut sebagai `MAIL_PASSWORD`
-
-### 6. Migrasi Database
-```bash
-# Jalankan migrasi
-php artisan migrate
-```
-```bash
-# (Opsional) Jalankan seeder untuk data dummy
-php artisan db:seed --class=AdminSeeder
-```
-
-## Menjalankan Aplikasi
-### 1. Development Server
-```bash
-php artisan serve
-```
-Aplikasi akan berjalan di `http://localhost:8000`
-
-**Clear Cache (jika diperlukan):**
-```bash
-php artisan config:clear
-php artisan cache:clear
-php artisan view:clear
-```
+## Troubleshooting
+- **Assets Tidak Muncul**:
+  ```bash
+  php artisan storage:link
+  ```
+  ```bash
+  php artisan cache:clear
+  ```
+  ```bash
+  npm run build
+  ```
+- **Error Vite**:
+  ```bash
+  npm install
+  ```
+  ```bash
+  npm run build
+  ```
+- **Avatar Tidak Tampil**:
+  ```bash
+  php artisan storage:link
+  ```

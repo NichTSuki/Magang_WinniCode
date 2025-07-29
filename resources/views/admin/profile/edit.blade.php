@@ -42,16 +42,12 @@
                             </div>
                             <div class="mb-3">
                                 <label for="avatar" class="form-label"><i class="fas fa-image"></i> Foto Profil</label>
-                                @php
-                                    $hasRealAvatar =
-                                        $admin->avatar_url &&
-                                        $admin->avatar_url !== '/avatar/default-avatar.png' &&
-                                        strpos($admin->avatar_url, '/storage/avatars/') === 0;
-                                @endphp
-                                @if ($hasRealAvatar)
+
+                                @if ($admin->avatar_url && $admin->avatar_url !== '/avatar/default-avatar.png' && $admin->avatar_url !== null)
                                     <div class="mb-3">
-                                        <img src="{{ $admin->avatar_url }}" alt="Avatar saat ini" class="img-thumbnail"
-                                            style="width: 100px; height: 100px; object-fit: cover;" id="current-avatar">
+                                        <img src="{{ asset($admin->avatar_url) }}" alt="Avatar saat ini" class="img-thumbnail"
+                                            style="width: 100px; height: 100px; object-fit: cover;" id="current-avatar"
+                                            onerror="this.style.display='none';">
                                         <small class="d-block text-muted">Avatar saat ini</small>
                                         <div class="mt-2">
                                             <button type="button" class="btn btn-sm btn-outline-danger"
@@ -80,11 +76,12 @@
                             <div class="mb-3">
                                 <label for="current_password" class="form-label"><i class="fas fa-lock"></i> Password Saat Ini</label>
                                 <input type="password" class="form-control @error('current_password') is-invalid @enderror"
-                                    id="current_password" name="current_password" required
-                                    placeholder="Masukkan password saat ini">
+                                    id="current_password" name="current_password"
+                                    placeholder="Masukkan password saat ini (diperlukan jika ingin mengubah password)">
                                 @error('current_password')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
+                                <small class="form-text text-muted">Diperlukan hanya jika ingin mengubah password</small>
                             </div>
 
                             <div class="mb-3">
@@ -124,91 +121,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        document.getElementById('avatar-input').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('preview-img').src = e.target.result;
-                    document.getElementById('avatar-preview').style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-                // Reset remove avatar flag when new file is selected
-                document.getElementById('remove-avatar').value = '0';
-            } else {
-                document.getElementById('avatar-preview').style.display = 'none';
-            }
-        });
-
-        function removeAvatar() {
-            if (confirm('Apakah Anda yakin ingin menghapus avatar?')) {
-                document.getElementById('remove-avatar').value = '1';
-                document.getElementById('avatar-input').value = '';
-                document.getElementById('avatar-preview').style.display = 'none';
-
-                // Hide current avatar and show message
-                const currentAvatarContainer = document.getElementById('current-avatar').parentElement;
-                currentAvatarContainer.innerHTML =
-                    '<small class="text-muted">Avatar akan dihapus setelah menyimpan perubahan</small>';
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const newPassword = document.getElementById('new_password');
-            const confirmPassword = document.getElementById('new_password_confirmation');
-            const submitButton = document.querySelector('button[type="submit"]');
-
-            function validatePasswords() {
-                if (newPassword.value && confirmPassword.value) {
-                    if (newPassword.value !== confirmPassword.value) {
-                        confirmPassword.classList.add('is-invalid');
-                        confirmPassword.classList.remove('is-valid');
-
-                        // Hapus feedback lama jika ada
-                        const existingFeedback = confirmPassword.parentNode.querySelector(
-                            '.password-mismatch-feedback');
-                        if (existingFeedback) {
-                            existingFeedback.remove();
-                        }
-
-                        // Tambahkan feedback baru
-                        const feedback = document.createElement('div');
-                        feedback.className = 'invalid-feedback password-mismatch-feedback';
-                        feedback.textContent = 'Password dan konfirmasi password tidak sama';
-                        confirmPassword.parentNode.appendChild(feedback);
-
-                        submitButton.disabled = true;
-                    } else {
-                        confirmPassword.classList.remove('is-invalid');
-                        confirmPassword.classList.add('is-valid');
-
-                        // Hapus feedback mismatch
-                        const existingFeedback = confirmPassword.parentNode.querySelector(
-                            '.password-mismatch-feedback');
-                        if (existingFeedback) {
-                            existingFeedback.remove();
-                        }
-
-                        submitButton.disabled = false;
-                    }
-                } else {
-                    confirmPassword.classList.remove('is-invalid', 'is-valid');
-
-                    // Hapus feedback mismatch
-                    const existingFeedback = confirmPassword.parentNode.querySelector(
-                    '.password-mismatch-feedback');
-                    if (existingFeedback) {
-                        existingFeedback.remove();
-                    }
-
-                    submitButton.disabled = false;
-                }
-            }
-
-            newPassword.addEventListener('input', validatePasswords);
-            confirmPassword.addEventListener('input', validatePasswords);
-        });
-    </script>
 @endsection

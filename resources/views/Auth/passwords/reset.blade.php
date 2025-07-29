@@ -1,103 +1,66 @@
-<!DOCTYPE html>
-<html lang="id">
+@extends('layouts.auth')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset Password - Winnews</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
-</head>
+@section('title', 'Reset Password')
+@section('heading', 'Reset Password')
 
-<body style="background-color: #363535;">
-    <div class="login-page d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+@section('content')
+<form method="POST" action="{{ route('password.update') }}">
+    @csrf
 
-        <div class="card shadow p-4"
-            style="max-width: 400px; width: 100%; border-radius: 16px; background-color: #ffffff">
-            <h2 class="mb-4 text-center">Reset Password</h2>
+    <input type="hidden" name="token" value="{{ $token }}">
 
-            @if (session('status'))
-                <div class="alert alert-success">{{ session('status') }}</div>
-            @endif
+    <div class="mb-3">
+        <label for="password" class="form-label">Password Baru</label>
+        <input id="password" type="password"
+            class="form-control @error('password') is-invalid @enderror" name="password" required
+            autofocus>
+        @error('password')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
 
-            <form method="POST" action="{{ route('password.update') }}">
-                @csrf
-
-                <input type="hidden" name="token" value="{{ $token }}">
-
-                {{-- <div class="mb-3">
-                    <label for="email" class="form-label">Alamat Email</label>
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                        name="email" value="{{ request()->email }}" required readonly>
-                    @error('email')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div> --}}
-
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password Baru</label>
-                    <div class="input-group">
-                        <input id="password" type="password"
-                            class="form-control @error('password') is-invalid @enderror" name="password" required
-                            autofocus>
-                        <span class="input-group-text" style="cursor:pointer"
-                            onclick="togglePassword('password', this)">
-                            <i class="fa fa-eye"></i>
-                        </span>
-                    </div>
-                    @error('password')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="password-confirm" class="form-label">Konfirmasi Password Baru</label>
-                    <div class="input-group">
-                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
-                            required>
-                        <span class="input-group-text" style="cursor:pointer"
-                            onclick="togglePassword('password-confirm', this)">
-                            <i class="fa fa-eye"></i>
-                        </span>
-                    </div>
-                    <div id="password-match-message" class="text-danger mt-1" style="display: none;">
-                        Passwords do not match.
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-dark w-100">Reset Password</button>
-            </form>
+    <div class="mb-3">
+        <label for="password-confirm" class="form-label">Konfirmasi Password Baru</label>
+        <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
+            required>
+        <div id="password-match-message" class="text-danger mt-1" style="display: none;">
+            Passwords do not match.
         </div>
     </div>
-    <script>
-        function togglePassword(inputId, el) {
-            const input = document.getElementById(inputId);
-            const icon = el.querySelector('i');
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
+
+    <button type="submit" class="btn btn-primary w-100">Reset Password</button>
+</form>
+@endsection
+
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const passwordInput = document.getElementById('password');
+        const confirmInput = document.getElementById('password-confirm');
+        const messageDiv = document.getElementById('password-match-message');
+        const submitButton = document.querySelector('button[type="submit"]');
+
+        function validatePasswords() {
+            if (passwordInput.value && confirmInput.value) {
+                if (passwordInput.value !== confirmInput.value) {
+                    messageDiv.style.display = 'block';
+                    messageDiv.textContent = 'Passwords do not match.';
+                    confirmInput.classList.add('is-invalid');
+                    submitButton.disabled = true;
+                } else {
+                    messageDiv.style.display = 'none';
+                    confirmInput.classList.remove('is-invalid');
+                    submitButton.disabled = false;
+                }
             } else {
-                input.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
+                messageDiv.style.display = 'none';
+                confirmInput.classList.remove('is-invalid');
+                submitButton.disabled = false;
             }
         }
-        const password = document.getElementById('password');
-        const passwordConfirm = document.getElementById('password-confirm');
-        const passwordMatchMessage = document.getElementById('password-match-message');
 
-        passwordConfirm.addEventListener('input', () => {
-            if (password.value !== passwordConfirm.value) {
-                passwordMatchMessage.style.display = 'block';
-            } else {
-                passwordMatchMessage.style.display = 'none';
-            }
-        });
-    </script>
-</body>
-
-</html>
+        passwordInput.addEventListener('input', validatePasswords);
+        confirmInput.addEventListener('input', validatePasswords);
+    });
+</script>
+@endsection
