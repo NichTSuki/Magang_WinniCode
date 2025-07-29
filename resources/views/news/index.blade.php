@@ -11,7 +11,7 @@
                 // Tampilkan semua kategori yang tersedia dari controller
                 $kategoriList = isset($availableCategories) ? $availableCategories : collect();
 
-                // Jika tidak ada dari controller, ambil dari groupedNews sebagai fallback
+                // Jika tidak ada dari controller, ambil dari groupedNews sebagai fallbackphp artisan key:generate
                 if ($kategoriList->isEmpty()) {
                     $allNews = $groupedNews->flatten(1);
                     $kategoriList = $allNews->pluck('kategori')->unique()->filter()->values();
